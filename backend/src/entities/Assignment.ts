@@ -12,7 +12,8 @@ export class Assignment {
     @Column({ type: "text" })
     description: string;
 
-    //schedule: Date;
+    @Column({ type: "timestamp" })
+    schedule: string;
 
     @Column({ type: "interval" })
     duration: string;

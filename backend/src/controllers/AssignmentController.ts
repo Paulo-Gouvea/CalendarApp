@@ -1,81 +1,62 @@
 import { Request, Response } from "express";
-import { assignmentRepository } from "../repositories/assignmentRepository";
+import { ReqBody } from "../interfaces";
+import { CreateAssignmentService } from "../services/AssignmentServices/CreateAssignmentService";
+import { DeleteAssignmentService } from "../services/AssignmentServices/DeleteAssignmentService";
+import { GetAllAssignmentsService } from "../services/AssignmentServices/GetAllAssignmentsService";
+import { GetOneAssignmentService } from "../services/AssignmentServices/GetOneAssignmentService";
+import { UpdateAssignmentService } from "../services/AssignmentServices/UpdateAssignmentService";
 
 export class AssignmentController {
     async create(req: Request, res: Response){
-        const { title, description, duration } = req.body;
+        const { title, description, schedule, duration } = req.body as ReqBody;
 
-        if (!title || !description || !duration) {
+        if (!title || !description || !schedule || !duration ) {
             return res.status(400).json({message: "Uma das informações não foi passada"});
         }
 
-        try {
-            const newAssignment = assignmentRepository.create({
-                title,
-                description,
-                duration,
-            });
+        const service = new CreateAssignmentService();
 
-            await assignmentRepository.save(newAssignment);
+        const newAssignmentResponse = service.execute(res, title, description, schedule, duration);
 
-            return res.status(201).json(`Tarefa ${newAssignment.title} criada com sucesso`);
-        } catch (error) {
-            console.log(error);
-            return res.status(500).json({message: "Internal Server Error!"})
-        }
+        return newAssignmentResponse;
     }
 
-    async read(req: Request, res: Response){
-        try {
-            const assignments = await assignmentRepository.find();
+    async readAll(req: Request, res: Response){
+        const service = new GetAllAssignmentsService();
 
-            return res.json(assignments);
-        } catch (error) {
-            console.log(error);
-            return res.status(500).json({message: "Internal Server Error!"})
-        }
+        const assignmentsResponse = service.execute(res);
+
+        return assignmentsResponse;
+    }
+
+    async readOne(req: Request, res: Response){
+        const { id } = req.params;
+
+        const service = new GetOneAssignmentService();
+
+        const assignemtResponse = service.execute(id, res);
+
+        return assignemtResponse;
     }
 
     async update(req: Request, res: Response){
         const { id } = req.params;
-        const { title, description, duration } = req.body;
+        const { title, description, schedule, duration } = req.body as ReqBody;
 
-        try {
-            const assignmentToUpdate = await assignmentRepository.findOneBy({ id });
+        const service = new UpdateAssignmentService();
 
-            if(!assignmentToUpdate){
-                return res.status(400).json({message:"Não foi encontrada nenhuma tarefa"});
-            }
+        const updatedAssignmentResponse = service.execute(id, res, title, description, schedule, duration);
 
-            assignmentToUpdate.title = title ? title : assignmentToUpdate.title;
-            assignmentToUpdate.description = description ? description : assignmentToUpdate.description;
-            assignmentToUpdate.duration = duration ? duration : assignmentToUpdate.duration;
-
-            await assignmentRepository.save(assignmentToUpdate);
-
-            return res.json({message:`Tarefa ${assignmentToUpdate.title} foi atualizada com sucesso`});
-        } catch (error) {
-            console.log(error);
-            return res.status(500).json({message: "Internal Server Error!"})
-        }
+        return updatedAssignmentResponse;
     }
 
     async delete(req: Request, res: Response){
         const { id } = req.params;
 
-        try {
-            const assignmentToRemove = await assignmentRepository.findOneBy({ id });
+        const service = new DeleteAssignmentService();
 
-            if(!assignmentToRemove){
-                return res.status(400).json({message:"Não foi encontrada nenhuma tarefa"});
-            }
+        const deletedAssignmentResponse = service.execute(id, res);
 
-            await assignmentRepository.remove(assignmentToRemove);
-
-            return res.json({message:`Tarefa ${assignmentToRemove.title} foi deletada com sucesso`})
-        } catch (error) {
-            console.log(error);
-            return res.status(500).json({message: "Internal Server Error!"})
-        }
+        return deletedAssignmentResponse;
     }
 }
