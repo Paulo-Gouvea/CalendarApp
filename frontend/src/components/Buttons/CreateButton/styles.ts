@@ -14,7 +14,9 @@ export const Container = styled.div`
     align-items: center;
     justify-content: space-evenly;
 
-    transition: background-color 0.2s;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+
+    transition: background-color 0.2s, margin-top 0.2s;
 
     div {
         height: 1.5rem;
@@ -29,5 +31,6 @@ export const Container = styled.div`
     :hover {
         cursor: pointer;
         background-color: #F3EFEF;
+        margin-top: -5px;
     }
 `;
