@@ -12,5 +12,5 @@ AppDataSource
         app.use(express.json());
         app.use(routes); 
 
-        return app.listen(process.env.PORT);
+        return app.listen(3000);
     })

@@ -21,7 +21,7 @@ export const Container = styled.div`
     div {
         height: 1.5rem;
         width: 1.5rem;
-        background-color: green;
+        background-color: #1D5D90;
     }
 
     p {
