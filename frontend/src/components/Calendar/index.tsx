@@ -44,6 +44,7 @@ export function Calendar(){
                 events={assignments}
                 culture={"pt-BR"}
                 messages={lang}
+                onSelectEvent={(event: Object) => console.log(event)}
             />
         </Container>
     );

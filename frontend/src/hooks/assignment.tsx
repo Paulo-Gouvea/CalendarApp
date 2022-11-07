@@ -1,13 +1,6 @@
-import { createContext, ReactNode, useContext } from "react";
-
-interface AssignmentContextData {
-   assignments: {
-      title: string;
-      start: Date;
-      end: Date;
-  }[]
-}
- 
+import { createContext, ReactNode, useContext, useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { AssignmentContextData, Assignemnt } from "../interfaces"
 interface AssignmentProviderProps {
    children: ReactNode;
 }
@@ -15,34 +8,23 @@ interface AssignmentProviderProps {
 export const AssignmentContext = createContext({} as AssignmentContextData);
  
 function AssignmentProvider({ children }: AssignmentProviderProps){
-   const date = new Date();
-   const assignments = [
-      {
-          title: 'ssssss',
-          start: new Date('2022-11-03 15:00:00'),
-          end: new Date('2022-11-04 15:00:00'),
-      },
-      {
-          title: 'Alimentar',
-          start: date,
-          end: date,
-      },
-      {
-          title: 'Estudar',
-          start: date,
-          end: date,
-      },
-      {
-          title: 'Estudar',
-          start: date,
-          end: date,
-      },
-      {
-          title: 'Estudar',
-          start: date,
-          end: date,
-      },
-    ]
+  const [assignments, setAssignments] = useState<Assignemnt[]>([]);
+  
+  const { status, error, data } = useQuery({
+    queryKey: [],
+    queryFn: () =>
+      fetch('http://localhost:3000/assignment/')
+      .then(res => res.json())
+      .then(data => data as Assignemnt[])
+  })
+
+  console.log(data);
+
+   useEffect(() => {
+    if (status === 'success'){
+      setAssignments(data)
+    }
+   }, [status, data])
 
    return (
        <AssignmentContext.Provider value={{
