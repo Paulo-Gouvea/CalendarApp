@@ -8,15 +8,15 @@ import { UpdateAssignmentService } from "../services/AssignmentServices/UpdateAs
 
 export class AssignmentController {
     async create(req: Request, res: Response){
-        const { title, description, schedule, duration } = req.body as ReqBody;
+        const { title, description, start, end } = req.body as ReqBody;
 
-        if (!title || !description || !schedule || !duration ) {
+        if (!title || !description || !start || !end ) {
             return res.status(400).json({message: "Uma das informações não foi passada"});
         }
 
         const service = new CreateAssignmentService();
 
-        const newAssignmentResponse = service.execute(res, title, description, schedule, duration);
+        const newAssignmentResponse = service.execute(res, title, description, start, end);
 
         return newAssignmentResponse;
     }
@@ -41,11 +41,11 @@ export class AssignmentController {
 
     async update(req: Request, res: Response){
         const { id } = req.params;
-        const { title, description, schedule, duration } = req.body as ReqBody;
+        const { title, description, start, end } = req.body as ReqBody;
 
         const service = new UpdateAssignmentService();
 
-        const updatedAssignmentResponse = service.execute(id, res, title, description, schedule, duration);
+        const updatedAssignmentResponse = service.execute(id, res, title, description, start, end);
 
         return updatedAssignmentResponse;
     }

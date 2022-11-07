@@ -1,6 +1,6 @@
 export interface ReqBody {
     title: string;
     description: string;
-    schedule: string;
-    duration: string;
+    start: string;
+    end: string;
 }

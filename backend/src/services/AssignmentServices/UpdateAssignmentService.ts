@@ -7,8 +7,8 @@ export class UpdateAssignmentService {
         res: Response, 
         title: string, 
         description: string, 
-        schedule: string, 
-        duration: string
+        start: string, 
+        end: string
     ){
         try {
             const assignmentToUpdate = await assignmentRepository.findOneBy({ id });
@@ -19,8 +19,8 @@ export class UpdateAssignmentService {
 
             assignmentToUpdate.title = title ? title : assignmentToUpdate.title;
             assignmentToUpdate.description = description ? description : assignmentToUpdate.description;
-            assignmentToUpdate.schedule = schedule ? schedule : assignmentToUpdate.schedule;
-            assignmentToUpdate.duration = duration ? duration : assignmentToUpdate.duration;
+            assignmentToUpdate.start = start ? start : assignmentToUpdate.start;
+            assignmentToUpdate.end = end ? end : assignmentToUpdate.end;
 
             await assignmentRepository.save(assignmentToUpdate);
 

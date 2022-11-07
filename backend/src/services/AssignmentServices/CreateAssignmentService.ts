@@ -6,15 +6,15 @@ export class CreateAssignmentService {
         res: Response, 
         title: string, 
         description: string, 
-        schedule: string, 
-        duration: string
+        start: string, 
+        end: string
     ){
         try {
             const newAssignment = assignmentRepository.create({
                 title,
                 description,
-                schedule,
-                duration,
+                start,
+                end,
             });
 
             await assignmentRepository.save(newAssignment);

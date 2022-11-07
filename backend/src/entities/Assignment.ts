@@ -13,10 +13,10 @@ export class Assignment {
     description: string;
 
     @Column({ type: "timestamp" })
-    schedule: string;
+    start: string;
 
-    @Column({ type: "interval" })
-    duration: string;
+    @Column({ type: "timestamp" })
+    end: string;
 
     @CreateDateColumn()
     created_at: Date; 
