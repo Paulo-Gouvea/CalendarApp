@@ -3,6 +3,7 @@ import {
 } from 'react';
 
 import { AssignmentProvider } from './assignment';
+import { ToggleModalProvider } from './toggleModal';
 
 interface AppProviderProps {
     children: ReactNode; 
@@ -11,7 +12,9 @@ interface AppProviderProps {
 function AppProvider({ children }: AppProviderProps) {
     return (
         <AssignmentProvider>
-            { children }
+            <ToggleModalProvider>
+                { children }
+            </ToggleModalProvider>    
         </AssignmentProvider>
     )
 }

@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useContext, useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { AssignmentContextData, Assignemnt } from "../interfaces"
+import axios from "axios";
 interface AssignmentProviderProps {
    children: ReactNode;
 }
@@ -10,13 +11,17 @@ export const AssignmentContext = createContext({} as AssignmentContextData);
 function AssignmentProvider({ children }: AssignmentProviderProps){
   const [assignments, setAssignments] = useState<Assignemnt[]>([]);
   
-  const { status, error, data } = useQuery({
+  const { status, data } = useQuery({
     queryKey: [],
     queryFn: () =>
       fetch('http://localhost:3000/assignment/')
       .then(res => res.json())
       .then(data => data as Assignemnt[])
   })
+
+  const addAssignment = useMutation((assignment: Assignemnt) =>
+        axios.post('http://localhost:3000/assignment/', assignment)
+    )
 
   console.log(data);
 
@@ -29,6 +34,7 @@ function AssignmentProvider({ children }: AssignmentProviderProps){
    return (
        <AssignmentContext.Provider value={{
          assignments,
+         addAssignment,
        }} >
            {children}
        </AssignmentContext.Provider>

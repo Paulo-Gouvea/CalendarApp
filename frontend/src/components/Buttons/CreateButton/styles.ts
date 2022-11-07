@@ -21,11 +21,9 @@ export const Container = styled.div`
     div {
         height: 1.5rem;
         width: 1.5rem;
-        background-color: #1D5D90;
-    }
-
-    p {
-
+        display: flex;
+        align-items: center;
+        font-size: 2rem;
     }
 
     :hover {

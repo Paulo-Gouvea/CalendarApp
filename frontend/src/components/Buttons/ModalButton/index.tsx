@@ -1,21 +1,17 @@
 import { Container } from "./styles";
 
-interface CreateButtonProps {
+interface ModalButtonProps {
     onClick: () => void;
 }
 
-export function CreateButton({
+export function ModalButton({
     onClick
-}: CreateButtonProps){
+}: ModalButtonProps){
     return (
         <Container
             onClick={onClick}
         >
-            <div>
-                +
-            </div>
-
-            <p>Criar</p>
+            <p>CRIAR TAREFA</p>
         </Container>
     );
 }
