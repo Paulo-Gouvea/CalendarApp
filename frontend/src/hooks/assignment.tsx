@@ -21,11 +21,15 @@ function AssignmentProvider({ children }: AssignmentProviderProps){
   })
 
   const addAssignment = useMutation((assignment: Assignemnt) =>
-        axios.post('http://localhost:3000/assignment/', assignment)
+      axios.post('http://localhost:3000/assignment/', assignment)
   )
 
-  const deleteAssignment = useMutation((assignment: Assignemnt) =>
-        axios.delete(`http://localhost:3000/assignment/${assignment.id}`)
+  const deleteAssignment = useMutation(() =>
+      axios.delete(`http://localhost:3000/assignment/${selectedAssignment.id}`)
+  )
+
+  const updateAssignment = useMutation((assignment: Assignemnt) =>
+      axios.put(`http://localhost:3000/assignment/${selectedAssignment.id}`, assignment)
   )
 
   console.log(data);
@@ -42,7 +46,8 @@ function AssignmentProvider({ children }: AssignmentProviderProps){
          selectedAssignment,
          setSelectedAssignment,
          addAssignment,
-         deleteAssignment
+         deleteAssignment,
+         updateAssignment
        }} >
            {children}
        </AssignmentContext.Provider>

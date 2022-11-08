@@ -6,7 +6,8 @@ export interface AssignmentContextData {
     selectedAssignment: Assignemnt;
     setSelectedAssignment: React.Dispatch<React.SetStateAction<Assignemnt>>;
     addAssignment: UseMutationResult<AxiosResponse<any, any>, unknown, Assignemnt, unknown>
-    deleteAssignment: UseMutationResult<AxiosResponse<any, any>, unknown, Assignemnt, unknown>
+    deleteAssignment: UseMutationResult<AxiosResponse<any, any>, unknown, void, unknown>
+    updateAssignment: UseMutationResult<AxiosResponse<any, any>, unknown, Assignemnt, unknown>
 }
 
 export interface Assignemnt {

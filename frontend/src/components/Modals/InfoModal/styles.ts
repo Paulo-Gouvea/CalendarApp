@@ -13,7 +13,7 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-    height: 26rem;
+    height: 28rem;
     width: 40rem;
     background-color: white;
     z-index: 15;
@@ -45,8 +45,22 @@ export const Content = styled.div`
     section {
         margin-top: 1.5rem;
 
-        div {
+        input {
+            height: 2rem;
+            width: 15rem;
+            margin-right: 2rem;
+            padding: 0 0.3rem;
+        }
+
+        .entity-container {
             margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .datetime-input-container{
+
         }
     }
 
