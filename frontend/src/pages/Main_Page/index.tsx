@@ -1,23 +1,32 @@
 import { Body } from "../../components/Body";
 import { Header } from "../../components/Header";
 import { FormModal } from "../../components/Modals/FormModal";
+import { InfoModal } from "../../components/Modals/InfoModal";
 
-import { useToggleModal } from "../../hooks/toggleModal";
+import { useToggleFormModal } from "../../hooks/toggleFormModal";
+import { useToggleInfoModal } from "../../hooks/toggleInfoModal";
 
 export function MainPage(){
-    const { isOpen, handleToggle } = useToggleModal();
+    const { isFormModalOpen, handleFormModalToggle } = useToggleFormModal();
+    const { isInfoModalOpen, handleInfoModalToggle } = useToggleInfoModal();
 
     return (
         <>
             <Header />
 
             <Body 
-                sidebarOnClick={handleToggle}
+                sidebarOnClick={handleFormModalToggle}
+                calendarOnClick={handleInfoModalToggle}
             />
 
             <FormModal 
-                isOpen={isOpen}
-                closeOnClick={handleToggle}
+                isOpen={isFormModalOpen}
+                closeOnClick={handleFormModalToggle}
+            />
+
+            <InfoModal 
+                isOpen={isInfoModalOpen}
+                closeOnClick={handleInfoModalToggle}
             />
         </>
     )

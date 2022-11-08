@@ -5,10 +5,12 @@ import { Calendar } from "../Calendar";
 
 interface BodyProps {
     sidebarOnClick: () => void;
+    calendarOnClick: () => void;
 }
 
 export function Body({
-    sidebarOnClick
+    sidebarOnClick,
+    calendarOnClick
 }: BodyProps){
     return (
         <Container>
@@ -16,7 +18,9 @@ export function Body({
                 createButtonOnClick={sidebarOnClick}
             />
 
-            <Calendar />
+            <Calendar 
+                calendarOnClick={calendarOnClick}
+            />
         </Container>
     )
 }

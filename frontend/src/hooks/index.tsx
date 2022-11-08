@@ -3,7 +3,8 @@ import {
 } from 'react';
 
 import { AssignmentProvider } from './assignment';
-import { ToggleModalProvider } from './toggleModal';
+import { ToggleFormModalProvider } from './toggleFormModal';
+import { ToggleInfoModalProvider } from './toggleInfoModal';
 
 interface AppProviderProps {
     children: ReactNode; 
@@ -12,9 +13,11 @@ interface AppProviderProps {
 function AppProvider({ children }: AppProviderProps) {
     return (
         <AssignmentProvider>
-            <ToggleModalProvider>
-                { children }
-            </ToggleModalProvider>    
+            <ToggleFormModalProvider>
+                <ToggleInfoModalProvider>
+                    { children }
+                </ToggleInfoModalProvider>
+            </ToggleFormModalProvider>    
         </AssignmentProvider>
     )
 }

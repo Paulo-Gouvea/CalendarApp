@@ -4,7 +4,7 @@ import { Container, Content } from "./styles";
 import { ModalButton } from "../../Buttons/ModalButton";
 
 import { useAssignment } from "../../../hooks/assignment";
-import { useToggleModal } from "../../../hooks/toggleModal";
+import { useToggleFormModal } from "../../../hooks/toggleFormModal";
 
 import { Assignemnt } from "../../../interfaces"
 interface FormModalProps {
@@ -23,7 +23,7 @@ export function FormModal({
         const [end, setEnd] = useState<string>('')
 
         const { addAssignment } = useAssignment()
-        const { setIsOpen } = useToggleModal()
+        const { setIsFormModalOpen } = useToggleFormModal()
 
         const handleCreateAssignment = () => {
             let assignment = {} as Assignemnt;
@@ -44,7 +44,7 @@ export function FormModal({
             setStart('')
             setEnd('')
 
-            setIsOpen(oldState => !oldState);
+            setIsFormModalOpen(oldState => !oldState);
         }
 
         return (
@@ -101,6 +101,8 @@ export function FormModal({
                 <footer>
                     <ModalButton 
                         onClick={handleCreateAssignment}
+                        title={'CRIAR TAREFA'}
+                        buttonColor={'#00c04b'}
                     />
                 </footer>
             </Content>

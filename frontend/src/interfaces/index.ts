@@ -3,7 +3,10 @@ import { AxiosResponse } from "axios";
 
 export interface AssignmentContextData {
     assignments: Assignemnt[];
+    selectedAssignment: Assignemnt;
+    setSelectedAssignment: React.Dispatch<React.SetStateAction<Assignemnt>>;
     addAssignment: UseMutationResult<AxiosResponse<any, any>, unknown, Assignemnt, unknown>
+    deleteAssignment: UseMutationResult<AxiosResponse<any, any>, unknown, Assignemnt, unknown>
 }
 
 export interface Assignemnt {

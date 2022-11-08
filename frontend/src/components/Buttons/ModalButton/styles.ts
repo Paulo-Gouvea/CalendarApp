@@ -1,12 +1,15 @@
 import styled from "styled-components";
+interface ModalButtonStyleProps {
+    color: string
+}
 
-export const Container = styled.div`
+export const Container = styled.div<ModalButtonStyleProps>`
     height: 3rem;
 
     border-radius: 2rem;
     padding: 0 1.5rem;
 
-    background-color: #00c04b;
+    background-color: ${({ color }) => color};
     color: #FFFFFF;
 
     display: flex;

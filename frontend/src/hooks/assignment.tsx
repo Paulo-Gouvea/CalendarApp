@@ -10,6 +10,7 @@ export const AssignmentContext = createContext({} as AssignmentContextData);
  
 function AssignmentProvider({ children }: AssignmentProviderProps){
   const [assignments, setAssignments] = useState<Assignemnt[]>([]);
+  const [selectedAssignment, setSelectedAssignment] = useState<Assignemnt>({} as Assignemnt);
   
   const { status, data } = useQuery({
     queryKey: [],
@@ -21,7 +22,11 @@ function AssignmentProvider({ children }: AssignmentProviderProps){
 
   const addAssignment = useMutation((assignment: Assignemnt) =>
         axios.post('http://localhost:3000/assignment/', assignment)
-    )
+  )
+
+  const deleteAssignment = useMutation((assignment: Assignemnt) =>
+        axios.delete(`http://localhost:3000/assignment/${assignment.id}`)
+  )
 
   console.log(data);
 
@@ -29,12 +34,15 @@ function AssignmentProvider({ children }: AssignmentProviderProps){
     if (status === 'success'){
       setAssignments(data)
     }
-   }, [status, data])
+   }, [status, data, assignments])
 
    return (
        <AssignmentContext.Provider value={{
          assignments,
+         selectedAssignment,
+         setSelectedAssignment,
          addAssignment,
+         deleteAssignment
        }} >
            {children}
        </AssignmentContext.Provider>

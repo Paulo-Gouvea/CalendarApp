@@ -1,5 +1,6 @@
 import { Container } from "./styles";
 import { useAssignment } from "../../hooks/assignment";
+import { Assignemnt } from "../../interfaces";
 
 import { Calendar as CustomCalendar, dateFnsLocalizer } from 'react-big-calendar';
 import format from "date-fns/format";
@@ -34,8 +35,20 @@ const lang = {
     showMore: (total: number) => `+${total} tarefas`,
 }
 
-export function Calendar(){
-    const { assignments } = useAssignment();
+interface CalendarProps {
+    calendarOnClick: () => void;
+}
+
+export function Calendar({
+    calendarOnClick
+}: CalendarProps){
+    const { assignments, setSelectedAssignment } = useAssignment();
+
+    const handleCalendarEvent = (event: Assignemnt) => {
+        setSelectedAssignment(event)
+
+        calendarOnClick();
+    }
 
     return (
         <Container>
@@ -44,7 +57,7 @@ export function Calendar(){
                 events={assignments}
                 culture={"pt-BR"}
                 messages={lang}
-                onSelectEvent={(event: Object) => console.log(event)}
+                onSelectEvent={(event: Assignemnt) => handleCalendarEvent(event)}
             />
         </Container>
     );
