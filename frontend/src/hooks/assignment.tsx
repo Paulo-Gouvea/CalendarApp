@@ -32,8 +32,6 @@ function AssignmentProvider({ children }: AssignmentProviderProps){
       axios.put(`http://localhost:3000/assignment/${selectedAssignment.id}`, assignment)
   )
 
-  console.log(data);
-
    useEffect(() => {
     if (status === 'success'){
       setAssignments(data)
