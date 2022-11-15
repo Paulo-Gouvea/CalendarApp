@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useState, useEffect } from "react";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { AssignmentContextData, Assignemnt } from "../interfaces"
 import axios from "axios";
 interface AssignmentProviderProps {
@@ -11,9 +11,11 @@ export const AssignmentContext = createContext({} as AssignmentContextData);
 function AssignmentProvider({ children }: AssignmentProviderProps){
   const [assignments, setAssignments] = useState<Assignemnt[]>([]);
   const [selectedAssignment, setSelectedAssignment] = useState<Assignemnt>({} as Assignemnt);
+
+  const queryClient = useQueryClient();
   
   const { status, data } = useQuery({
-    queryKey: [],
+    queryKey: ['assignments', assignments],
     queryFn: () =>
       fetch('http://localhost:3000/assignment/')
       .then(res => res.json())
@@ -21,15 +23,30 @@ function AssignmentProvider({ children }: AssignmentProviderProps){
   })
 
   const addAssignment = useMutation((assignment: Assignemnt) =>
-      axios.post('http://localhost:3000/assignment/', assignment)
+      axios.post('http://localhost:3000/assignment/', assignment), 
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries(['assignments'])
+        }
+      }
   )
 
   const deleteAssignment = useMutation(() =>
-      axios.delete(`http://localhost:3000/assignment/${selectedAssignment.id}`)
+      axios.delete(`http://localhost:3000/assignment/${selectedAssignment.id}`),
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries(['assignments'])
+        }
+      }
   )
 
   const updateAssignment = useMutation((assignment: Assignemnt) =>
-      axios.put(`http://localhost:3000/assignment/${selectedAssignment.id}`, assignment)
+      axios.put(`http://localhost:3000/assignment/${selectedAssignment.id}`, assignment),
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries(['assignments'])
+        }
+      }
   )
 
    useEffect(() => {
